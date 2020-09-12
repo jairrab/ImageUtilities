@@ -11,7 +11,7 @@ class ImageDimension(
     private val safUtilities: SafUtilities
 ) {
     fun getImageWidth(sourceUri: Uri): Int {
-        val inputStream = safUtilities.getFileInputStream(sourceUri)
+        val inputStream = safUtilities.getInputStream(sourceUri)
         val options = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
         BitmapFactory.decodeStream(inputStream, null, options)
         inputStream?.close()
