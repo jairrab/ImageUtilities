@@ -15,7 +15,7 @@ class BitmapUtilities(
         uri: Uri,
         width: Int
     ): Bitmap? {
-        val fileInputStream = safUtilities.getFileInputStream(uri)
+        val fileInputStream = safUtilities.getInputStream(uri)
         val bitmap = BitmapFactory.decodeStream(fileInputStream)
         val newHeight = (bitmap.height * (width.toFloat() / bitmap.width)).toInt()
         fileInputStream?.close()
@@ -24,7 +24,7 @@ class BitmapUtilities(
     }
 
     fun getBitmap(uri: Uri): Bitmap? {
-        val fileInputStream = safUtilities.getFileInputStream(uri)
+        val fileInputStream = safUtilities.getInputStream(uri)
         val bitmap = BitmapFactory.decodeStream(fileInputStream)
         fileInputStream?.close()
         return bitmap
