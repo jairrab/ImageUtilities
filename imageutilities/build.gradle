@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.github.jairrab.imageutilities'
-version = '1.1.0'
+version = '1.2.0'
 
 android {
     compileSdkVersion 29
@@ -52,8 +52,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //implementation project(':safutilities')
-    implementation 'com.github.jairrab:SafUtilities:1.1.0'
+//    implementation project(':safutilities')
+    implementation 'com.github.jairrab:SafUtilities:1.3.0'
 
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
 }
