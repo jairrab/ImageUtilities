@@ -11,6 +11,8 @@
 package com.github.jairrab.imageutilities.lib.helpers
 
 import android.net.Uri
+import android.util.Log
+import com.github.jairrab.imageutilities.lib.ImageUtilitiesLibrary.Companion.LOG_TAG
 import java.io.File
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -25,12 +27,16 @@ class ImageResizer(
         outputFile: File,
         quality: Int
     ): File {
-        val needsResizing = imageDimension.getImageWidth(sourceUri) > width
+        val imageWidth = imageDimension.getImageWidth(sourceUri)
+        val needsResizing = imageWidth > width
+        Log.d(LOG_TAG, "imageWidth: $imageWidth | maxWidth: $width | needsResizing: $needsResizing")
+
         val bitmap = if (needsResizing) {
             bitmapUtilities.getResizedBitmap(sourceUri, width)
         } else {
             bitmapUtilities.getBitmap(sourceUri)
         }
+
         return jpegUtility.getJpeg(bitmap, outputFile, quality)
     }
 }

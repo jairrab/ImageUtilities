@@ -11,8 +11,9 @@ import java.io.File
 
 internal class ImageUtilitiesLibrary private constructor(
     private val cameraHelper: CameraHelper,
-    private val oldImageResizer: OldImageResizer,
     private val imageResizer: ImageResizer,
+    private val oldImageResizer: OldImageResizer,
+    private val openFileExternally: OpenFileExternally,
 ) : ImageUtilities {
     override fun openCamera(
         fragment: Fragment,
@@ -37,11 +38,18 @@ internal class ImageUtilitiesLibrary private constructor(
         return outputFile
     }
 
+    override fun openFileExternally(file: File, fileAuthority: String) {
+        openFileExternally.execute(file, fileAuthority)
+    }
+
     companion object {
+        const val LOG_TAG = "ImageUtilities"
+
         fun getInstance(context: Context, safUtilities: SafUtilities): ImageUtilitiesLibrary {
             return ImageUtilitiesLibrary(
                 cameraHelper = CameraHelper(),
                 oldImageResizer = OldImageResizer(context),
+                openFileExternally = OpenFileExternally(context),
                 imageResizer = ImageResizer(
                     jpegUtility = JpegUtility(),
                     imageDimension = ImageDimension(safUtilities),

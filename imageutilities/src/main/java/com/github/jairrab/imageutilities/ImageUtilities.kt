@@ -25,6 +25,8 @@ interface ImageUtilities {
     @Deprecated("Use other instead")
     fun getResizedImage(outputFile: File): File
 
+    fun openFileExternally(file: File, fileAuthority: String)
+
     companion object {
         fun getInstance(context: Context): ImageUtilities {
             val safUtilities = SafUtilities.getInstance(context)
