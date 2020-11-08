@@ -52,7 +52,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //implementation project(':safutilities')
-    implementation 'com.github.jairrab:SafUtilities:1.4.0'
+    implementation 'com.github.jairrab:SafUtilities:2.0.0'
 
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
 }
