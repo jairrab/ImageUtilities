@@ -1,6 +1,7 @@
 package com.github.jairrab.imageutilities
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import com.github.jairrab.imageutilities.lib.ImageUtilitiesLibrary
@@ -8,12 +9,11 @@ import com.github.jairrab.safutilities.SafUtilities
 import java.io.File
 
 interface ImageUtilities {
-    fun openCamera(
-        fragment: Fragment,
-        file: File,
-        requestCode: Int,
-        fileAuthority: String,
-    )
+    fun getJpeg(
+        bitmap: Bitmap?,
+        outputFile: File,
+        quality: Int
+    ): File
 
     fun getResizedImage(
         sourceUri: Uri,
@@ -22,8 +22,18 @@ interface ImageUtilities {
         quality: Int
     ): File
 
-    @Deprecated("Use other instead")
+    /**
+     * Use [ImageUtilities.getResizedImage] instead
+     */
+    @Deprecated("Not using latest libraries")
     fun getResizedImage(outputFile: File): File
+
+    fun openCamera(
+        fragment: Fragment,
+        file: File,
+        requestCode: Int,
+        fileAuthority: String,
+    )
 
     fun openFileExternally(file: File, fileAuthority: String)
 

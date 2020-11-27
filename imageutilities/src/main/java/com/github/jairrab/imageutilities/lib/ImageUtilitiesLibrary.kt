@@ -1,6 +1,7 @@
 package com.github.jairrab.imageutilities.lib
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import com.github.jairrab.imageutilities.ImageUtilities
@@ -12,16 +13,16 @@ import java.io.File
 internal class ImageUtilitiesLibrary private constructor(
     private val cameraHelper: CameraHelper,
     private val imageResizer: ImageResizer,
+    private val jpegUtility: JpegUtility,
     private val oldImageResizer: OldImageResizer,
     private val openFileExternally: OpenFileExternally,
 ) : ImageUtilities {
-    override fun openCamera(
-        fragment: Fragment,
-        file: File,
-        requestCode: Int,
-        fileAuthority: String,
-    ) {
-        cameraHelper.openCamera(fragment, file, requestCode, fileAuthority)
+    override fun getJpeg(
+        bitmap: Bitmap?,
+        outputFile: File,
+        quality: Int
+    ): File {
+        return jpegUtility.getJpeg(bitmap, outputFile, quality)
     }
 
     override fun getResizedImage(
@@ -34,8 +35,17 @@ internal class ImageUtilitiesLibrary private constructor(
     }
 
     override fun getResizedImage(outputFile: File): File {
-         oldImageResizer.generatePictureFile(outputFile)
+        oldImageResizer.generatePictureFile(outputFile)
         return outputFile
+    }
+
+    override fun openCamera(
+        fragment: Fragment,
+        file: File,
+        requestCode: Int,
+        fileAuthority: String,
+    ) {
+        cameraHelper.openCamera(fragment, file, requestCode, fileAuthority)
     }
 
     override fun openFileExternally(file: File, fileAuthority: String) {
@@ -46,15 +56,17 @@ internal class ImageUtilitiesLibrary private constructor(
         const val LOG_TAG = "ImageUtilities"
 
         fun getInstance(context: Context, safUtilities: SafUtilities): ImageUtilitiesLibrary {
+            val jpegUtility = JpegUtility()
             return ImageUtilitiesLibrary(
                 cameraHelper = CameraHelper(),
-                oldImageResizer = OldImageResizer(context),
-                openFileExternally = OpenFileExternally(context),
                 imageResizer = ImageResizer(
-                    jpegUtility = JpegUtility(),
+                    jpegUtility = jpegUtility,
                     imageDimension = ImageDimension(safUtilities),
                     bitmapUtilities = BitmapUtilities(BitmapRotation(context), safUtilities)
-                )
+                ),
+                jpegUtility = JpegUtility(),
+                oldImageResizer = OldImageResizer(context),
+                openFileExternally = OpenFileExternally(context),
             )
         }
     }
