@@ -138,15 +138,17 @@ class OldImageResizer(
      */
     @Throws(IOException::class)
     private fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: Uri): Bitmap {
-
-        val input = context.contentResolver.openInputStream(selectedImage)
-        val ei: ExifInterface
-        ei = if (Build.VERSION.SDK_INT > 23)
+        val exifInterface = if (Build.VERSION.SDK_INT > 23) {
+            val input = context.contentResolver.openInputStream(selectedImage)
+                ?: throw IllegalStateException("Null image uri")
             ExifInterface(input)
-        else
-            ExifInterface(selectedImage.path)
+        } else {
+            val filename = selectedImage.path
+                ?: throw IllegalStateException("Null filename")
+            ExifInterface(filename)
+        }
 
-        val orientation = ei.getAttributeInt(
+        val orientation = exifInterface.getAttributeInt(
             ExifInterface.TAG_ORIENTATION,
             ExifInterface.ORIENTATION_NORMAL
         )
