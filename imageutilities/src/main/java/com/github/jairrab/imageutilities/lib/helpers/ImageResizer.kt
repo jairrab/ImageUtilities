@@ -17,7 +17,7 @@ import java.io.File
 
 @Suppress("MemberVisibilityCanBePrivate")
 class ImageResizer(
-    private val jpegUtility: JpegUtility,
+    private val bitmapUtility: BitmapUtility,
     private val imageDimension: ImageDimension,
     private val bitmapUtilities: BitmapUtilities
 ) {
@@ -37,6 +37,6 @@ class ImageResizer(
             bitmapUtilities.getBitmap(sourceUri)
         }
 
-        return jpegUtility.getJpeg(bitmap, outputFile, quality)
+        return bitmapUtility.getJpeg(bitmap, outputFile, quality)
     }
 }

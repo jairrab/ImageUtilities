@@ -15,6 +15,17 @@ interface ImageUtilities {
         quality: Int
     ): File
 
+    fun getPng(
+        bitmap: Bitmap?,
+        outputFile: File,
+        quality: Int
+    ): File
+
+    fun getPngBase64(
+        bitmap: Bitmap,
+        quality: Int,
+    ): String
+
     fun getResizedImage(
         sourceUri: Uri,
         outputFile: File,

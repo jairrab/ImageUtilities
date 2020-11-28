@@ -13,7 +13,7 @@ import java.io.File
 internal class ImageUtilitiesLibrary private constructor(
     private val cameraHelper: CameraHelper,
     private val imageResizer: ImageResizer,
-    private val jpegUtility: JpegUtility,
+    private val bitmapUtility: BitmapUtility,
     private val oldImageResizer: OldImageResizer,
     private val openFileExternally: OpenFileExternally,
 ) : ImageUtilities {
@@ -22,7 +22,15 @@ internal class ImageUtilitiesLibrary private constructor(
         outputFile: File,
         quality: Int
     ): File {
-        return jpegUtility.getJpeg(bitmap, outputFile, quality)
+        return bitmapUtility.getJpeg(bitmap, outputFile, quality)
+    }
+
+    override fun getPng(bitmap: Bitmap?, outputFile: File, quality: Int): File {
+        return bitmapUtility.getPng(bitmap, outputFile, quality)
+    }
+
+    override fun getPngBase64(bitmap: Bitmap, quality: Int): String {
+        return bitmapUtility.getPngBase64(bitmap, quality)
     }
 
     override fun getResizedImage(
@@ -56,15 +64,15 @@ internal class ImageUtilitiesLibrary private constructor(
         const val LOG_TAG = "ImageUtilities"
 
         fun getInstance(context: Context, safUtilities: SafUtilities): ImageUtilitiesLibrary {
-            val jpegUtility = JpegUtility()
+            val bitmapUtility = BitmapUtility()
             return ImageUtilitiesLibrary(
                 cameraHelper = CameraHelper(),
                 imageResizer = ImageResizer(
-                    jpegUtility = jpegUtility,
+                    bitmapUtility = bitmapUtility,
                     imageDimension = ImageDimension(safUtilities),
                     bitmapUtilities = BitmapUtilities(BitmapRotation(context), safUtilities)
                 ),
-                jpegUtility = JpegUtility(),
+                bitmapUtility = BitmapUtility(),
                 oldImageResizer = OldImageResizer(context),
                 openFileExternally = OpenFileExternally(context),
             )
