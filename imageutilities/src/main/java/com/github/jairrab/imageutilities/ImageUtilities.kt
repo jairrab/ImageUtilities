@@ -26,6 +26,11 @@ interface ImageUtilities {
         quality: Int,
     ): String
 
+    fun getJpgBase64(
+        bitmap: Bitmap,
+        quality: Int,
+    ): String
+
     fun getResizedImage(
         sourceUri: Uri,
         outputFile: File,

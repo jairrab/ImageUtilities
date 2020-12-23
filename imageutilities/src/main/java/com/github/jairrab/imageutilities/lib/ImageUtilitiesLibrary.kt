@@ -33,6 +33,10 @@ internal class ImageUtilitiesLibrary private constructor(
         return bitmapUtility.getPngBase64(bitmap, quality)
     }
 
+    override fun getJpgBase64(bitmap: Bitmap, quality: Int): String {
+        return bitmapUtility.getJpgBase64(bitmap, quality)
+    }
+
     override fun getResizedImage(
         sourceUri: Uri,
         outputFile: File,

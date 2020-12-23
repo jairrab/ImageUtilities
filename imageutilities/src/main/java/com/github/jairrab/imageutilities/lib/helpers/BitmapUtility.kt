@@ -42,4 +42,14 @@ class BitmapUtility {
         val bytes = outputStream.toByteArray()
         return Base64.encodeToString(bytes, Base64.NO_WRAP)
     }
+
+    fun getJpgBase64(
+        bitmap: Bitmap,
+        quality: Int,
+    ): String {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+        val bytes = outputStream.toByteArray()
+        return Base64.encodeToString(bytes, Base64.NO_WRAP)
+    }
 }
